@@ -1,0 +1,6 @@
+-keep class com.auranote.app.data.api.** { *; }
+-keep class com.auranote.app.data.model.** { *; }
+-keepattributes Signature
+-keepattributes *Annotation*
+-dontwarn okhttp3.**
+-dontwarn retrofit2.**
