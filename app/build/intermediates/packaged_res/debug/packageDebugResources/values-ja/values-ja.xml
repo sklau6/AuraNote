@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ai_chat_hint">録音について質問…</string>
+    <string name="ai_generating_summary">AI 要約を生成中…</string>
+    <string name="ai_transcribing">音声を文字起こし中…</string>
+    <string name="api_key_required">OpenAI API キーが必要です</string>
+    <string name="app_description">AI による会議録音と文字起こし</string>
+    <string name="detail_ai_chat">AI チャット</string>
+    <string name="detail_study">学習</string>
+    <string name="detail_summary">要約</string>
+    <string name="detail_transcribe">AI で文字起こし</string>
+    <string name="detail_transcript">文字起こし</string>
+    <string name="filter_all">すべて</string>
+    <string name="home_empty_subtitle">マイクボタンをタップして録音を開始</string>
+    <string name="home_empty_title">録音がありません</string>
+    <string name="home_search_hint">録音を検索…</string>
+    <string name="live_transcription">ライブ文字起こし</string>
+    <string name="live_transcription_listening">聞いています… 話し始めると、ここに文字が表示されます。</string>
+    <string name="minutes_action_items">アクションアイテム</string>
+    <string name="minutes_executive_summary">エグゼクティブサマリー</string>
+    <string name="minutes_generate">会議議事録を生成</string>
+    <string name="minutes_key_decisions">主要な決定事項</string>
+    <string name="minutes_key_points">議論ポイント</string>
+    <string name="minutes_next_steps">次のステップ</string>
+    <string name="notif_channel_recording">録音</string>
+    <string name="notif_pause">一時停止</string>
+    <string name="notif_paused_text">録音を一時停止しました。</string>
+    <string name="notif_recording_text">会議を録音しています。</string>
+    <string name="notif_recording_title">AuraNote — 録音中</string>
+    <string name="notif_resume">再開</string>
+    <string name="notif_stop">停止</string>
+    <string name="onboarding_get_started">開始する</string>
+    <string name="onboarding_next">次へ</string>
+    <string name="onboarding_skip">スキップ</string>
+    <string name="record_cancel">キャンセル</string>
+    <string name="record_done">完了</string>
+    <string name="record_import">音声ファイルを取り込む</string>
+    <string name="record_new">新しい録音</string>
+    <string name="record_paused">一時停止</string>
+    <string name="record_permission_error">録音にはマイク権限が必要です</string>
+    <string name="record_recording">録音中…</string>
+    <string name="record_title_hint">録音タイトル（任意）</string>
+    <string name="settings_api_key">OpenAI API キー</string>
+    <string name="settings_language">文字起こし言語</string>
+    <string name="settings_title">設定</string>
+</resources>

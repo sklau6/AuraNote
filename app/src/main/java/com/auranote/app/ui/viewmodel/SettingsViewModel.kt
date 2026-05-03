@@ -21,7 +21,8 @@ data class SettingsUiState(
     val speakerDetection: Boolean = true,
     val autoTranscribe: Boolean = true,
     val recordingQuality: String = "HIGH",
-    val saveSuccess: Boolean = false
+    val saveSuccess: Boolean = false,
+    val appTheme: String = "DARK"
 )
 
 private data class PrefsSnapshot(
@@ -29,7 +30,8 @@ private data class PrefsSnapshot(
     val language: String,
     val speakerDetection: Boolean,
     val autoTranscribe: Boolean,
-    val quality: String
+    val quality: String,
+    val theme: String
 )
 
 @HiltViewModel
@@ -45,9 +47,17 @@ class SettingsViewModel @Inject constructor(
         preferences.transcriptionLanguage,
         preferences.speakerDetection,
         preferences.autoTranscribe,
-        preferences.recordingQuality
-    ) { apiKey, lang, speaker, auto, quality ->
-        PrefsSnapshot(apiKey, lang, speaker, auto, quality)
+        preferences.recordingQuality,
+        preferences.appTheme
+    ) { values ->
+        PrefsSnapshot(
+            apiKey = values[0] as String,
+            language = values[1] as String,
+            speakerDetection = values[2] as Boolean,
+            autoTranscribe = values[3] as Boolean,
+            quality = values[4] as String,
+            theme = values[5] as String
+        )
     }
 
     val uiState: StateFlow<SettingsUiState> = combine(
@@ -62,7 +72,8 @@ class SettingsViewModel @Inject constructor(
             speakerDetection = prefs.speakerDetection,
             autoTranscribe = prefs.autoTranscribe,
             recordingQuality = prefs.quality,
-            saveSuccess = success
+            saveSuccess = success,
+            appTheme = prefs.theme
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), SettingsUiState())
 
@@ -93,6 +104,10 @@ class SettingsViewModel @Inject constructor(
 
     fun setRecordingQuality(quality: String) {
         viewModelScope.launch { preferences.setRecordingQuality(quality) }
+    }
+
+    fun setTheme(theme: String) {
+        viewModelScope.launch { preferences.setAppTheme(theme) }
     }
 
     fun completeOnboarding() {

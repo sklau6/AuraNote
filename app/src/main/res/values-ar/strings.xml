@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_description">ملاحظات اجتماعات مدعومة بالذكاء الاصطناعي</string>
+    <string name="onboarding_skip">تخطٍ</string>
+    <string name="onboarding_next">التالي</string>
+    <string name="onboarding_get_started">ابدأ</string>
+    <string name="home_empty_title">لا توجد تسجيلات بعد</string>
+    <string name="home_empty_subtitle">اضغط على الميكروفون لبدء التسجيل</string>
+    <string name="home_search_hint">ابحث في التسجيلات…</string>
+    <string name="filter_all">الكل</string>
+    <string name="record_new">تسجيل جديد</string>
+    <string name="record_recording">يسجّل…</string>
+    <string name="record_paused">متوقف مؤقتًا</string>
+    <string name="record_cancel">إلغاء</string>
+    <string name="record_done">تم</string>
+    <string name="record_title_hint">عنوان التسجيل (اختياري)</string>
+    <string name="record_import">استيراد ملف صوتي</string>
+    <string name="record_permission_error">يلزم إذن الميكروفون للتسجيل</string>
+    <string name="detail_transcript">النص</string>
+    <string name="detail_summary">الملخص</string>
+    <string name="detail_ai_chat">محادثة AI</string>
+    <string name="ai_transcribing">جارٍ تفريغ الصوت…</string>
+    <string name="ai_generating_summary">جارٍ إنشاء الملخص…</string>
+    <string name="api_key_required">يلزم مفتاح OpenAI API</string>
+    <string name="settings_title">الإعدادات</string>
+    <string name="settings_api_key">مفتاح OpenAI API</string>
+    <string name="notif_recording_title">AuraNote — يسجل الآن</string>
+    <string name="notif_recording_text">جارٍ تسجيل اجتماعك.</string>
+    <string name="notif_paused_text">تم إيقاف التسجيل مؤقتًا.</string>
+    <string name="notif_pause">إيقاف مؤقت</string>
+    <string name="notif_resume">استئناف</string>
+    <string name="notif_stop">إيقاف</string>
+    <string name="live_transcription">تفريغ مباشر</string>
+    <string name="live_transcription_listening">يستمع… ابدأ بالتحدث وستظهر كلماتك هنا.</string>
+    <string name="minutes_executive_summary">الملخص التنفيذي</string>
+    <string name="minutes_key_decisions">القرارات الرئيسية</string>
+    <string name="minutes_action_items">الإجراءات المطلوبة</string>
+    <string name="minutes_key_points">نقاط النقاش</string>
+    <string name="minutes_next_steps">الخطوات التالية</string>
+    <string name="minutes_generate">إنشاء محضر اجتماع</string>
+</resources>

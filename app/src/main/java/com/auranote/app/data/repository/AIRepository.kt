@@ -109,6 +109,101 @@ $segmentLines
         }
     }
 
+    /**
+     * Generate professional meeting minutes from a raw transcript.
+     *
+     * Uses a strict system prompt that pins the model to a fixed JSON schema:
+     *   { executive_summary, key_decisions[], action_items[{task, owner, due}], next_steps[] }
+     *
+     * Transparently retries on transient network/JSON failures (up to 3 attempts).
+     * Persists into the existing AISummary row, populating `overview`, `decisions`,
+     * `actionItems`, and `nextSteps`.
+     */
+    suspend fun generateMeetingMinutes(
+        apiKey: String,
+        recordingId: Long,
+        transcriptText: String,
+        languageHint: String = "auto"
+    ): Result<AISummary> = runCatching {
+        val systemPrompt = """
+You are a professional meeting-minutes writer. Your job is to convert a raw, possibly messy transcript into clean, executive-ready minutes.
+
+ABSOLUTE RULES — FOLLOW EXACTLY:
+1. Output a SINGLE JSON object. No prose, no markdown, no code fences.
+2. Use this exact schema (field names lowercase, snake_case, do not rename):
+{
+  "overview": "EXECUTIVE SUMMARY: 2-4 crisp sentences capturing purpose, outcome, and tone of the meeting.",
+  "key_points": ["Notable discussion point or topic raised.", "..."],
+  "decisions": ["KEY DECISION: a complete declarative sentence describing something the group agreed on.", "..."],
+  "action_items": ["TASK — OWNER (or 'Unassigned') — DUE (ISO date or 'TBD')", "..."],
+  "next_steps": ["Concrete follow-up planned for after this meeting.", "..."]
+}
+3. Be concise and professional. Strip filler ("um", "you know"). Merge redundant statements.
+4. Never invent participants, dates, or commitments not present in the transcript. If unknown, write "Unassigned" / "TBD".
+5. Preserve the transcript's original language: ${if (languageHint == "auto") "match transcript" else languageHint}.
+6. If the transcript is too short or off-topic, still output the schema; leave arrays empty rather than fabricate.
+        """.trimIndent()
+
+        val userPrompt = "TRANSCRIPT:\n\n${transcriptText.trim()}"
+
+        val maxAttempts = 3
+        var lastError: Throwable? = null
+        var summaryResponse: SummaryResponse? = null
+
+        for (attempt in 1..maxAttempts) {
+            try {
+                val response = openAIService.chatCompletion(
+                    authorization = "Bearer $apiKey",
+                    request = ChatCompletionRequest(
+                        model = GPT_MODEL,
+                        messages = listOf(
+                            ChatApiMessage("system", systemPrompt),
+                            ChatApiMessage("user", userPrompt)
+                        ),
+                        maxTokens = 2000
+                    )
+                )
+                val content = response.choices.firstOrNull()?.message?.content ?: "{}"
+                val cleanJson = extractJson(content)
+                summaryResponse = gson.fromJson(cleanJson, SummaryResponse::class.java)
+                break
+            } catch (t: Throwable) {
+                lastError = t
+                Log.w(TAG, "Meeting minutes attempt $attempt failed: ${t.message}")
+                if (attempt < maxAttempts) kotlinx.coroutines.delay(1500L * attempt)
+            }
+        }
+
+        val parsed = summaryResponse
+            ?: throw lastError ?: IllegalStateException("Could not generate meeting minutes")
+
+        val summary = AISummary(
+            recordingId = recordingId,
+            overview = parsed.overview,
+            keyPoints = gson.toJson(parsed.keyPoints),
+            actionItems = gson.toJson(parsed.actionItems),
+            decisions = gson.toJson(parsed.decisions),
+            nextSteps = gson.toJson(parsed.nextSteps)
+        )
+
+        val existing = summaryDao.getSummarySync(recordingId)
+        if (existing != null) {
+            summaryDao.updateSummary(
+                existing.copy(
+                    overview = summary.overview,
+                    keyPoints = summary.keyPoints,
+                    actionItems = summary.actionItems,
+                    decisions = summary.decisions,
+                    nextSteps = summary.nextSteps,
+                    generatedAt = System.currentTimeMillis()
+                )
+            )
+        } else {
+            summaryDao.insertSummary(summary)
+        }
+        summary
+    }
+
     suspend fun generateSummary(
         apiKey: String,
         recordingId: Long,

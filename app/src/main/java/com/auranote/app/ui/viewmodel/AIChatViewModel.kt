@@ -7,6 +7,7 @@ import com.auranote.app.data.model.ChatMessage
 import com.auranote.app.data.model.MessageRole
 import com.auranote.app.data.preferences.AppPreferences
 import com.auranote.app.data.repository.AIRepository
+import com.auranote.app.data.repository.GeminiRepository
 import com.auranote.app.data.repository.OnDeviceAIRepository
 import com.auranote.app.data.repository.RecordingRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,6 +29,7 @@ data class AIChatUiState(
 @HiltViewModel
 class AIChatViewModel @Inject constructor(
     private val aiRepository: AIRepository,
+    private val geminiRepository: GeminiRepository,
     private val onDeviceAI: OnDeviceAIRepository,
     private val recordingRepository: RecordingRepository,
     private val preferences: AppPreferences
@@ -84,8 +86,45 @@ class AIChatViewModel @Inject constructor(
                 )
             }
 
-            if (apiKey.isBlank()) {
-                // Fallback: on-device Gemini Nano Prompt API
+            // Try Gemini first (built-in keys, no user config needed)
+            val geminiResult = geminiRepository.chat(
+                transcriptText = transcriptText,
+                conversationHistory = conversationHistory,
+                userMessage = text
+            )
+
+            if (geminiResult.isSuccess) {
+                val response = geminiResult.getOrThrow()
+                val assistantMessage = ChatMessage(content = response, role = MessageRole.ASSISTANT)
+                conversationHistory.add(ChatApiMessage("user", text))
+                conversationHistory.add(ChatApiMessage("assistant", response))
+                _uiState.update { state ->
+                    state.copy(messages = state.messages + assistantMessage, isLoading = false)
+                }
+            } else if (apiKey.isNotBlank()) {
+                // Fall back to OpenAI if Gemini fails
+                aiRepository.chatWithRecording(
+                    apiKey = apiKey,
+                    transcriptText = transcriptText,
+                    conversationHistory = conversationHistory,
+                    userMessage = text
+                ).fold(
+                    onSuccess = { response ->
+                        val assistantMessage = ChatMessage(content = response, role = MessageRole.ASSISTANT)
+                        conversationHistory.add(ChatApiMessage("user", text))
+                        conversationHistory.add(ChatApiMessage("assistant", response))
+                        _uiState.update { state ->
+                            state.copy(messages = state.messages + assistantMessage, isLoading = false)
+                        }
+                    },
+                    onFailure = { e ->
+                        _uiState.update { state ->
+                            state.copy(isLoading = false, error = "Failed to get response: ${e.message}")
+                        }
+                    }
+                )
+            } else {
+                // Last resort: on-device AI
                 val prompt = buildString {
                     if (transcriptText.isNotBlank()) {
                         append("You are a helpful assistant. The user has this transcript:\n\n")
@@ -105,29 +144,8 @@ class AIChatViewModel @Inject constructor(
                         _uiState.update { state ->
                             state.copy(
                                 isLoading = false,
-                                error = "On-device AI failed: ${e.message}. Add an OpenAI key in Settings for cloud AI."
+                                error = "All AI backends failed: ${e.message}"
                             )
-                        }
-                    }
-                )
-            } else {
-                aiRepository.chatWithRecording(
-                    apiKey = apiKey,
-                    transcriptText = transcriptText,
-                    conversationHistory = conversationHistory,
-                    userMessage = text
-                ).fold(
-                    onSuccess = { response ->
-                        val assistantMessage = ChatMessage(content = response, role = MessageRole.ASSISTANT)
-                        conversationHistory.add(ChatApiMessage("user", text))
-                        conversationHistory.add(ChatApiMessage("assistant", response))
-                        _uiState.update { state ->
-                            state.copy(messages = state.messages + assistantMessage, isLoading = false)
-                        }
-                    },
-                    onFailure = { e ->
-                        _uiState.update { state ->
-                            state.copy(isLoading = false, error = "Failed to get response: ${e.message}")
                         }
                     }
                 )

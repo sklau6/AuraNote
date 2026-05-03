@@ -14,6 +14,7 @@ import androidx.navigation.compose.rememberNavController
 import com.auranote.app.data.preferences.AppPreferences
 import com.auranote.app.ui.navigation.AuraNoteNavGraph
 import com.auranote.app.ui.navigation.Screen
+import com.auranote.app.ui.theme.AppTheme
 import com.auranote.app.ui.theme.AuraNoteTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -29,7 +30,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            AuraNoteTheme {
+            val themeStr by appPreferences.appTheme.collectAsState(initial = "DARK")
+            val appTheme = when (themeStr) {
+                "LIGHT" -> AppTheme.LIGHT
+                "SYSTEM" -> AppTheme.SYSTEM
+                else -> AppTheme.DARK
+            }
+            AuraNoteTheme(appTheme = appTheme) {
                 Surface(modifier = Modifier.fillMaxSize()) {
                     val navController = rememberNavController()
                     val onboardingCompleted by appPreferences.onboardingCompleted

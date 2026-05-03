@@ -1,8 +1,13 @@
 package com.auranote.app.ui.screens
 
 import android.Manifest
+import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.filled.Subtitles
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.FastOutSlowInEasing
@@ -104,6 +109,14 @@ fun RecordScreen(
     val context = LocalContext.current
     val snackbarState = remember { SnackbarHostState() }
     val micPermission = rememberPermissionState(Manifest.permission.RECORD_AUDIO)
+    val notifPermission = if (Build.VERSION.SDK_INT >= 33) {
+        rememberPermissionState(Manifest.permission.POST_NOTIFICATIONS)
+    } else null
+    LaunchedEffect(Unit) {
+        if (notifPermission != null && !notifPermission.status.isGranted) {
+            notifPermission.launchPermissionRequest()
+        }
+    }
 
     val importLauncher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
         uri?.let { viewModel.importAudioFile(context, it) }
@@ -341,6 +354,60 @@ fun RecordScreen(
                     isRecording = isRecording,
                     modifier = Modifier.fillMaxSize()
                 )
+            }
+
+            // ── Live transcript panel ────────────────────────────────────────
+            AnimatedVisibility(
+                visible = isActive && uiState.liveTranscriptionAvailable && uiState.liveTranscriptionEnabled,
+                enter = fadeIn() + expandVertically(),
+                exit = fadeOut() + shrinkVertically()
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 14.dp)
+                        .clip(RoundedCornerShape(18.dp))
+                        .background(NavyCard)
+                        .padding(horizontal = 16.dp, vertical = 14.dp)
+                ) {
+                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Icon(Icons.Default.Subtitles, null, tint = GradientStart, modifier = Modifier.size(16.dp))
+                        Text(
+                            "Live transcription",
+                            style = MaterialTheme.typography.labelMedium,
+                            fontWeight = FontWeight.SemiBold,
+                            color = GradientStart
+                        )
+                        Spacer(Modifier.weight(1f))
+                        if (uiState.liveTranscriptPartial.isNotBlank()) RecordingPulseDot()
+                    }
+                    Spacer(Modifier.height(8.dp))
+                    val scroll = rememberScrollState()
+                    LaunchedEffect(uiState.liveTranscriptFinal, uiState.liveTranscriptPartial) {
+                        scroll.animateScrollTo(scroll.maxValue)
+                    }
+                    Box(modifier = Modifier.fillMaxWidth().height(110.dp).verticalScroll(scroll)) {
+                        val finalText = uiState.liveTranscriptFinal
+                        val partialText = uiState.liveTranscriptPartial
+                        val combined = listOf(finalText, partialText)
+                            .filter { it.isNotBlank() }
+                            .joinToString(separator = " ")
+                        if (combined.isBlank()) {
+                            Text(
+                                "Listening… Start speaking and your words will appear here.",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = TextTertiary
+                            )
+                        } else {
+                            Text(
+                                text = combined,
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = TextPrimary,
+                                lineHeight = 22.sp
+                            )
+                        }
+                    }
+                }
             }
 
             Spacer(Modifier.weight(1f))

@@ -59,6 +59,9 @@ class RecordingRepository @Inject constructor(
     suspend fun insertTranscriptSegments(segments: List<TranscriptSegment>) =
         transcriptDao.insertSegments(segments)
 
+    suspend fun updateTranscriptSegment(segment: TranscriptSegment) =
+        transcriptDao.insertSegments(listOf(segment))
+
     suspend fun deleteTranscriptSegments(recordingId: Long) =
         transcriptDao.deleteSegmentsByRecordingId(recordingId)
 

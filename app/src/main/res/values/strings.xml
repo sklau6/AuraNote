@@ -65,4 +65,27 @@
     <string name="error_transcription_failed">Transcription failed. Check API key and connection.</string>
     <string name="error_summary_failed">Summary generation failed.</string>
     <string name="error_import_failed">Failed to import audio file</string>
+
+    <!-- Foreground recording notification -->
+    <string name="notif_channel_recording">Recording</string>
+    <string name="notif_channel_recording_desc">Persistent notification while a meeting is being recorded.</string>
+    <string name="notif_recording_title">AuraNote — Recording in progress</string>
+    <string name="notif_recording_text">Your meeting is being captured.</string>
+    <string name="notif_paused_text">Recording paused.</string>
+    <string name="notif_pause">Pause</string>
+    <string name="notif_resume">Resume</string>
+    <string name="notif_stop">Stop</string>
+
+    <!-- Live transcription -->
+    <string name="live_transcription">Live transcription</string>
+    <string name="live_transcription_listening">Listening… Start speaking and your words will appear here.</string>
+    <string name="live_transcription_unavailable">On-device speech recognition is not available on this device.</string>
+
+    <!-- Meeting minutes -->
+    <string name="minutes_executive_summary">Executive Summary</string>
+    <string name="minutes_key_decisions">Key Decisions</string>
+    <string name="minutes_action_items">Action Items</string>
+    <string name="minutes_key_points">Discussion Points</string>
+    <string name="minutes_next_steps">Next Steps</string>
+    <string name="minutes_generate">Generate Meeting Minutes</string>
 </resources>

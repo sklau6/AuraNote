@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_description">Notas y transcripción de reuniones con IA</string>
+    <string name="onboarding_skip">Omitir</string>
+    <string name="onboarding_next">Siguiente</string>
+    <string name="onboarding_get_started">Comenzar</string>
+    <string name="home_empty_title">Todavía no hay grabaciones</string>
+    <string name="home_empty_subtitle">Toca el micrófono para empezar a grabar</string>
+    <string name="home_search_hint">Buscar grabaciones…</string>
+    <string name="filter_all">Todo</string>
+    <string name="record_new">Nueva grabación</string>
+    <string name="record_recording">Grabando…</string>
+    <string name="record_paused">Pausado</string>
+    <string name="record_cancel">Cancelar</string>
+    <string name="record_done">Listo</string>
+    <string name="record_title_hint">Título de la grabación (opcional)</string>
+    <string name="record_import">Importar archivo de audio</string>
+    <string name="record_permission_error">Se requiere permiso de micrófono para grabar</string>
+    <string name="detail_transcript">Transcripción</string>
+    <string name="detail_summary">Resumen</string>
+    <string name="detail_ai_chat">Chat con IA</string>
+    <string name="ai_transcribing">Transcribiendo audio…</string>
+    <string name="ai_generating_summary">Generando resumen con IA…</string>
+    <string name="api_key_required">Se requiere clave API de OpenAI</string>
+    <string name="settings_title">Ajustes</string>
+    <string name="settings_api_key">Clave API de OpenAI</string>
+    <string name="notif_recording_title">AuraNote — Grabando</string>
+    <string name="notif_recording_text">Tu reunión se está grabando.</string>
+    <string name="notif_paused_text">Grabación pausada.</string>
+    <string name="notif_pause">Pausar</string>
+    <string name="notif_resume">Reanudar</string>
+    <string name="notif_stop">Detener</string>
+    <string name="live_transcription">Transcripción en vivo</string>
+    <string name="live_transcription_listening">Escuchando… Empieza a hablar y tus palabras aparecerán aquí.</string>
+    <string name="minutes_executive_summary">Resumen ejecutivo</string>
+    <string name="minutes_key_decisions">Decisiones clave</string>
+    <string name="minutes_action_items">Acciones</string>
+    <string name="minutes_key_points">Puntos de discusión</string>
+    <string name="minutes_next_steps">Próximos pasos</string>
+    <string name="minutes_generate">Generar acta de reunión</string>
+</resources>

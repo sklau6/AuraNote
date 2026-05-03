@@ -2,6 +2,7 @@ package com.auranote.app.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,17 +15,25 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -51,9 +60,12 @@ fun TranscriptSegmentItem(
     searchQuery: String = "",
     isActive: Boolean = false,
     onSeekTo: (Float) -> Unit = {},
+    onEdit: ((String) -> Unit)? = null,
     modifier: Modifier = Modifier
 ) {
     val speakerColor = speakerColor(segment.speakerLabel)
+    var isEditing by remember { mutableStateOf(false) }
+    var editedText by remember(segment.id) { mutableStateOf(TextFieldValue(segment.text)) }
 
     Row(
         modifier = modifier
@@ -106,12 +118,44 @@ fun TranscriptSegmentItem(
                 )
             }
             Spacer(Modifier.height(4.dp))
-            Text(
-                text = highlightText(segment.text, searchQuery),
-                style = MaterialTheme.typography.bodyMedium,
-                color = TextPrimary,
-                lineHeight = 22.sp
-            )
+            if (isEditing && onEdit != null) {
+                BasicTextField(
+                    value = editedText,
+                    onValueChange = { editedText = it },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .pointerInput(Unit) {
+                            detectTapGestures(
+                                onDoubleTap = {
+                                    isEditing = false
+                                    if (editedText.text != segment.text) {
+                                        onEdit(editedText.text)
+                                    }
+                                }
+                            )
+                        },
+                    textStyle = MaterialTheme.typography.bodyMedium.copy(
+                        color = TextPrimary,
+                        lineHeight = 22.sp
+                    ),
+                    cursorBrush = SolidColor(PurplePrimary),
+                    singleLine = false
+                )
+            } else {
+                Text(
+                    text = highlightText(segment.text, searchQuery),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = TextPrimary,
+                    lineHeight = 22.sp,
+                    modifier = if (onEdit != null) {
+                        Modifier.pointerInput(Unit) {
+                            detectTapGestures(
+                                onLongPress = { isEditing = true }
+                            )
+                        }
+                    } else Modifier
+                )
+            }
         }
     }
 }

@@ -17,6 +17,10 @@
     <item quantity="one">वीडियो को %d सेकंड पीछे ले जाएं</item>
     <item quantity="other">वीडियो को %d सेकंड पीछे ले जाएं</item>
   </plurals>
+    <string name="ai_generating_summary">AI सारांश बन रहा है…</string>
+    <string name="ai_transcribing">ऑडियो ट्रांसक्राइब हो रहा है…</string>
+    <string name="api_key_required">OpenAI API कुंजी आवश्यक है</string>
+    <string name="app_description">AI-संचालित मीटिंग नोट्स और ट्रांसक्रिप्शन</string>
     <string msgid="881409763997275156" name="call_notification_answer_action">"जवाब दें"</string>
     <string msgid="8793775615905189152" name="call_notification_answer_video_action">"वीडियो"</string>
     <string msgid="3229508546291798546" name="call_notification_decline_action">"अस्वीकार करें"</string>
@@ -28,6 +32,9 @@
     <string msgid="7573152094250666567" name="close_sheet">"शीट बंद करें"</string>
     <string msgid="8038256446254964252" name="default_error_message">"अमान्य इनपुट"</string>
     <string msgid="6312721426453364202" name="default_popup_window_title">"पॉप-अप विंडो"</string>
+    <string name="detail_ai_chat">AI चैट</string>
+    <string name="detail_summary">सारांश</string>
+    <string name="detail_transcript">ट्रांसक्रिप्ट</string>
     <string msgid="1890207353314751437" name="dropdown_menu">"ड्रॉपडाउन मेन्यू"</string>
     <string name="exo_controls_cc_disabled_description">सबटाइटल चालू करें</string>
     <string name="exo_controls_cc_enabled_description">सबटाइटल बंद करें</string>
@@ -81,8 +88,14 @@
     <string name="exo_track_surround_7_point_1">7.1 सराउंड साउंड</string>
     <string name="exo_track_unknown">अज्ञात</string>
     <string name="exo_track_unknown_name">कोई जानकारी नहीं (%1$s)</string>
+    <string name="filter_all">सभी</string>
+    <string name="home_empty_subtitle">रिकॉर्डिंग शुरू करने के लिए माइक दबाएँ</string>
+    <string name="home_empty_title">अभी कोई रिकॉर्डिंग नहीं</string>
+    <string name="home_search_hint">रिकॉर्डिंग खोजें…</string>
     <string msgid="6827826412747255547" name="in_progress">"जारी है"</string>
     <string msgid="7933458017204019916" name="indeterminate">"कुछ विकल्पों को चुना गया"</string>
+    <string name="live_transcription">लाइव ट्रांसक्रिप्शन</string>
+    <string name="live_transcription_listening">सुन रहा है… बोलना शुरू करें, आपके शब्द यहाँ दिखेंगे।</string>
     <string msgid="2988463736136100848" name="m3c_bottom_sheet_collapse_description">"बॉटम शीट को छोटा करें"</string>
     <string msgid="1555567894577437024" name="m3c_bottom_sheet_dismiss_description">"बॉटम शीट को खारिज करें"</string>
     <string msgid="8403354765404029791" name="m3c_bottom_sheet_drag_handle_description">"खींचकर छोड़ने वाला हैंडल"</string>
@@ -139,13 +152,38 @@
     <string msgid="6616362054113087709" name="m3c_time_picker_pm">"PM"</string>
     <string msgid="1805687647081129904" name="m3c_tooltip_long_press_label">"टूलटिप देखें"</string>
     <string msgid="5460405025248574620" name="m3c_tooltip_pane_description">"टूलटिप"</string>
+    <string name="minutes_action_items">कार्य आइटम</string>
+    <string name="minutes_executive_summary">कार्यकारी सारांश</string>
+    <string name="minutes_generate">मीटिंग मिनट्स बनाएँ</string>
+    <string name="minutes_key_decisions">मुख्य निर्णय</string>
+    <string name="minutes_key_points">चर्चा बिंदु</string>
+    <string name="minutes_next_steps">अगले कदम</string>
     <string msgid="542007171693138492" name="navigation_menu">"नेविगेशन मेन्यू"</string>
     <string msgid="6610465462668679431" name="not_selected">"नहीं चुना गया"</string>
+    <string name="notif_pause">रोकें</string>
+    <string name="notif_paused_text">रिकॉर्डिंग रोकी गई।</string>
+    <string name="notif_recording_text">आपकी मीटिंग रिकॉर्ड हो रही है।</string>
+    <string name="notif_recording_title">AuraNote — रिकॉर्ड हो रहा है</string>
+    <string name="notif_resume">जारी रखें</string>
+    <string name="notif_stop">बंद करें</string>
     <string msgid="875452955155264703" name="off">"बंद है"</string>
     <string msgid="8655164131929253426" name="on">"चालू है"</string>
+    <string name="onboarding_get_started">शुरू करें</string>
+    <string name="onboarding_next">आगे</string>
+    <string name="onboarding_skip">छोड़ें</string>
     <string msgid="5941395253238309765" name="range_end">"रेंज की सीमा"</string>
     <string msgid="7097486360902471446" name="range_start">"रेंज की शुरुआत"</string>
+    <string name="record_cancel">रद्द करें</string>
+    <string name="record_done">हो गया</string>
+    <string name="record_import">ऑडियो फ़ाइल आयात करें</string>
+    <string name="record_new">नई रिकॉर्डिंग</string>
+    <string name="record_paused">रोका गया</string>
+    <string name="record_permission_error">रिकॉर्ड करने के लिए माइक की अनुमति चाहिए</string>
+    <string name="record_recording">रिकॉर्ड हो रहा है…</string>
+    <string name="record_title_hint">रिकॉर्डिंग शीर्षक (वैकल्पिक)</string>
     <string msgid="6043586758067023" name="selected">"चुना गया"</string>
+    <string name="settings_api_key">OpenAI API कुंजी</string>
+    <string name="settings_title">सेटिंग्स</string>
     <string msgid="6277540029070332960" name="status_bar_notification_info_overflow">"999+"</string>
     <string msgid="2561197295334830845" name="switch_role">"स्विच करें"</string>
     <string msgid="1672349317127674378" name="tab">"टैब"</string>

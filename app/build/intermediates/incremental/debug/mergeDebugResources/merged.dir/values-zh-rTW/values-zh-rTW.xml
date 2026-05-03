@@ -17,6 +17,12 @@
     <item quantity="one">倒轉 %d 秒</item>
     <item quantity="other">倒轉 %d 秒</item>
   </plurals>
+    <string name="ai_chat_hint">針對你的錄音提問…</string>
+    <string name="ai_generating_summary">正在生成 AI 摘要…</string>
+    <string name="ai_transcribing">正在轉寫音訊…</string>
+    <string name="api_key_required">需要 OpenAI API 金鑰</string>
+    <string name="app_description">AI 驅動的會議記錄與轉寫</string>
+    <string name="app_name">AuraNote</string>
     <string msgid="881409763997275156" name="call_notification_answer_action">"接聽"</string>
     <string msgid="8793775615905189152" name="call_notification_answer_video_action">"視訊"</string>
     <string msgid="3229508546291798546" name="call_notification_decline_action">"拒接"</string>
@@ -28,6 +34,14 @@
     <string msgid="7573152094250666567" name="close_sheet">"關閉功能表"</string>
     <string msgid="8038256446254964252" name="default_error_message">"輸入內容無效"</string>
     <string msgid="6312721426453364202" name="default_popup_window_title">"彈出式視窗"</string>
+    <string name="detail_ai_chat">AI 對話</string>
+    <string name="detail_edit_title">編輯標題</string>
+    <string name="detail_retry">重新轉寫</string>
+    <string name="detail_share">分享</string>
+    <string name="detail_study">學習</string>
+    <string name="detail_summary">摘要</string>
+    <string name="detail_transcribe">使用 AI 轉寫</string>
+    <string name="detail_transcript">逐字稿</string>
     <string msgid="1890207353314751437" name="dropdown_menu">"下拉式選單"</string>
     <string name="exo_controls_cc_disabled_description">啟用字幕 (Subtitle)</string>
     <string name="exo_controls_cc_enabled_description">停用字幕 (Subtitle)</string>
@@ -81,8 +95,14 @@
     <string name="exo_track_surround_7_point_1">7.1 環繞音效</string>
     <string name="exo_track_unknown">不明</string>
     <string name="exo_track_unknown_name">不明 (%1$s)</string>
+    <string name="filter_all">全部</string>
+    <string name="home_empty_subtitle">點選麥克風按鈕開始錄音</string>
+    <string name="home_empty_title">尚未有錄音</string>
+    <string name="home_search_hint">搜尋錄音…</string>
     <string msgid="6827826412747255547" name="in_progress">"處理中"</string>
     <string msgid="7933458017204019916" name="indeterminate">"部分檢查"</string>
+    <string name="live_transcription">即時轉寫</string>
+    <string name="live_transcription_listening">聆聽中… 開始說話，文字會即時出現於此。</string>
     <string msgid="2988463736136100848" name="m3c_bottom_sheet_collapse_description">"收合底部功能表"</string>
     <string msgid="1555567894577437024" name="m3c_bottom_sheet_dismiss_description">"關閉底部功能表"</string>
     <string msgid="8403354765404029791" name="m3c_bottom_sheet_drag_handle_description">"拖曳控點"</string>
@@ -139,13 +159,41 @@
     <string msgid="6616362054113087709" name="m3c_time_picker_pm">"下午"</string>
     <string msgid="1805687647081129904" name="m3c_tooltip_long_press_label">"顯示工具提示"</string>
     <string msgid="5460405025248574620" name="m3c_tooltip_pane_description">"工具提示"</string>
+    <string name="minutes_action_items">行動項目</string>
+    <string name="minutes_executive_summary">執行摘要</string>
+    <string name="minutes_generate">產生會議紀錄</string>
+    <string name="minutes_key_decisions">關鍵決策</string>
+    <string name="minutes_key_points">討論重點</string>
+    <string name="minutes_next_steps">後續步驟</string>
     <string msgid="542007171693138492" name="navigation_menu">"導覽選單"</string>
     <string msgid="6610465462668679431" name="not_selected">"未選取"</string>
+    <string name="notif_channel_recording">錄音</string>
+    <string name="notif_pause">暫停</string>
+    <string name="notif_paused_text">錄音已暫停。</string>
+    <string name="notif_recording_text">正在記錄您的會議。</string>
+    <string name="notif_recording_title">AuraNote — 錄音中</string>
+    <string name="notif_resume">繼續</string>
+    <string name="notif_stop">停止</string>
     <string msgid="875452955155264703" name="off">"已關閉"</string>
     <string msgid="8655164131929253426" name="on">"已開啟"</string>
+    <string name="onboarding_get_started">開始使用</string>
+    <string name="onboarding_next">下一步</string>
+    <string name="onboarding_skip">略過</string>
     <string msgid="5941395253238309765" name="range_end">"範圍終點"</string>
     <string msgid="7097486360902471446" name="range_start">"範圍起點"</string>
+    <string name="record_cancel">取消</string>
+    <string name="record_done">完成</string>
+    <string name="record_finishing">完成中…</string>
+    <string name="record_import">匯入音訊檔</string>
+    <string name="record_new">新錄音</string>
+    <string name="record_paused">已暫停</string>
+    <string name="record_permission_error">需要麥克風權限才能錄音</string>
+    <string name="record_recording">錄音中…</string>
+    <string name="record_title_hint">錄音標題（選填）</string>
     <string msgid="6043586758067023" name="selected">"已選取"</string>
+    <string name="settings_api_key">OpenAI API 金鑰</string>
+    <string name="settings_language">轉寫語言</string>
+    <string name="settings_title">設定</string>
     <string msgid="6277540029070332960" name="status_bar_notification_info_overflow">"999+"</string>
     <string msgid="2561197295334830845" name="switch_role">"切換鈕"</string>
     <string msgid="1672349317127674378" name="tab">"Tab 鍵"</string>

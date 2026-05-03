@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_description">AI-संचालित मीटिंग नोट्स और ट्रांसक्रिप्शन</string>
+    <string name="onboarding_skip">छोड़ें</string>
+    <string name="onboarding_next">आगे</string>
+    <string name="onboarding_get_started">शुरू करें</string>
+    <string name="home_empty_title">अभी कोई रिकॉर्डिंग नहीं</string>
+    <string name="home_empty_subtitle">रिकॉर्डिंग शुरू करने के लिए माइक दबाएँ</string>
+    <string name="home_search_hint">रिकॉर्डिंग खोजें…</string>
+    <string name="filter_all">सभी</string>
+    <string name="record_new">नई रिकॉर्डिंग</string>
+    <string name="record_recording">रिकॉर्ड हो रहा है…</string>
+    <string name="record_paused">रोका गया</string>
+    <string name="record_cancel">रद्द करें</string>
+    <string name="record_done">हो गया</string>
+    <string name="record_title_hint">रिकॉर्डिंग शीर्षक (वैकल्पिक)</string>
+    <string name="record_import">ऑडियो फ़ाइल आयात करें</string>
+    <string name="record_permission_error">रिकॉर्ड करने के लिए माइक की अनुमति चाहिए</string>
+    <string name="detail_transcript">ट्रांसक्रिप्ट</string>
+    <string name="detail_summary">सारांश</string>
+    <string name="detail_ai_chat">AI चैट</string>
+    <string name="ai_transcribing">ऑडियो ट्रांसक्राइब हो रहा है…</string>
+    <string name="ai_generating_summary">AI सारांश बन रहा है…</string>
+    <string name="api_key_required">OpenAI API कुंजी आवश्यक है</string>
+    <string name="settings_title">सेटिंग्स</string>
+    <string name="settings_api_key">OpenAI API कुंजी</string>
+    <string name="notif_recording_title">AuraNote — रिकॉर्ड हो रहा है</string>
+    <string name="notif_recording_text">आपकी मीटिंग रिकॉर्ड हो रही है।</string>
+    <string name="notif_paused_text">रिकॉर्डिंग रोकी गई।</string>
+    <string name="notif_pause">रोकें</string>
+    <string name="notif_resume">जारी रखें</string>
+    <string name="notif_stop">बंद करें</string>
+    <string name="live_transcription">लाइव ट्रांसक्रिप्शन</string>
+    <string name="live_transcription_listening">सुन रहा है… बोलना शुरू करें, आपके शब्द यहाँ दिखेंगे।</string>
+    <string name="minutes_executive_summary">कार्यकारी सारांश</string>
+    <string name="minutes_key_decisions">मुख्य निर्णय</string>
+    <string name="minutes_action_items">कार्य आइटम</string>
+    <string name="minutes_key_points">चर्चा बिंदु</string>
+    <string name="minutes_next_steps">अगले कदम</string>
+    <string name="minutes_generate">मीटिंग मिनट्स बनाएँ</string>
+</resources>

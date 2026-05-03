@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AuraNote</string>
+    <string name="app_description">AI 驅動的會議記錄與轉寫</string>
+
+    <string name="onboarding_skip">略過</string>
+    <string name="onboarding_next">下一步</string>
+    <string name="onboarding_get_started">開始使用</string>
+
+    <string name="home_empty_title">尚未有錄音</string>
+    <string name="home_empty_subtitle">點選麥克風按鈕開始錄音</string>
+    <string name="home_search_hint">搜尋錄音…</string>
+    <string name="filter_all">全部</string>
+
+    <string name="record_new">新錄音</string>
+    <string name="record_recording">錄音中…</string>
+    <string name="record_paused">已暫停</string>
+    <string name="record_finishing">完成中…</string>
+    <string name="record_cancel">取消</string>
+    <string name="record_done">完成</string>
+    <string name="record_title_hint">錄音標題（選填）</string>
+    <string name="record_import">匯入音訊檔</string>
+    <string name="record_permission_error">需要麥克風權限才能錄音</string>
+
+    <string name="detail_transcript">逐字稿</string>
+    <string name="detail_summary">摘要</string>
+    <string name="detail_ai_chat">AI 對話</string>
+    <string name="detail_study">學習</string>
+    <string name="detail_transcribe">使用 AI 轉寫</string>
+    <string name="detail_retry">重新轉寫</string>
+    <string name="detail_share">分享</string>
+    <string name="detail_edit_title">編輯標題</string>
+
+    <string name="ai_transcribing">正在轉寫音訊…</string>
+    <string name="ai_generating_summary">正在生成 AI 摘要…</string>
+    <string name="ai_chat_hint">針對你的錄音提問…</string>
+    <string name="api_key_required">需要 OpenAI API 金鑰</string>
+
+    <string name="settings_title">設定</string>
+    <string name="settings_api_key">OpenAI API 金鑰</string>
+    <string name="settings_language">轉寫語言</string>
+
+    <string name="notif_channel_recording">錄音</string>
+    <string name="notif_recording_title">AuraNote — 錄音中</string>
+    <string name="notif_recording_text">正在記錄您的會議。</string>
+    <string name="notif_paused_text">錄音已暫停。</string>
+    <string name="notif_pause">暫停</string>
+    <string name="notif_resume">繼續</string>
+    <string name="notif_stop">停止</string>
+
+    <string name="live_transcription">即時轉寫</string>
+    <string name="live_transcription_listening">聆聽中… 開始說話，文字會即時出現於此。</string>
+
+    <string name="minutes_executive_summary">執行摘要</string>
+    <string name="minutes_key_decisions">關鍵決策</string>
+    <string name="minutes_action_items">行動項目</string>
+    <string name="minutes_key_points">討論重點</string>
+    <string name="minutes_next_steps">後續步驟</string>
+    <string name="minutes_generate">產生會議紀錄</string>
+</resources>

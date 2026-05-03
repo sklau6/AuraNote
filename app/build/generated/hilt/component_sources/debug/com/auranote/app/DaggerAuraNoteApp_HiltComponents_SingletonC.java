@@ -25,7 +25,11 @@ import com.auranote.app.di.NetworkModule_ProvideGsonFactory;
 import com.auranote.app.di.NetworkModule_ProvideOkHttpClientFactory;
 import com.auranote.app.di.NetworkModule_ProvideOpenAIServiceFactory;
 import com.auranote.app.di.NetworkModule_ProvideRetrofitFactory;
+import com.auranote.app.service.AudioFocusManager;
 import com.auranote.app.service.AudioRecorderManager;
+import com.auranote.app.service.LiveTranscriptionManager;
+import com.auranote.app.service.RecordingService;
+import com.auranote.app.service.RecordingService_MembersInjector;
 import com.auranote.app.ui.viewmodel.AIChatViewModel;
 import com.auranote.app.ui.viewmodel.AIChatViewModel_HiltModules;
 import com.auranote.app.ui.viewmodel.DetailViewModel;
@@ -425,30 +429,30 @@ public final class DaggerAuraNoteApp_HiltComponents_SingletonC {
 
     @IdentifierNameString
     private static final class LazyClassKeyProvider {
-      static String com_auranote_app_ui_viewmodel_HomeViewModel = "com.auranote.app.ui.viewmodel.HomeViewModel";
-
       static String com_auranote_app_ui_viewmodel_AIChatViewModel = "com.auranote.app.ui.viewmodel.AIChatViewModel";
+
+      static String com_auranote_app_ui_viewmodel_DetailViewModel = "com.auranote.app.ui.viewmodel.DetailViewModel";
+
+      static String com_auranote_app_ui_viewmodel_HomeViewModel = "com.auranote.app.ui.viewmodel.HomeViewModel";
 
       static String com_auranote_app_ui_viewmodel_RecordViewModel = "com.auranote.app.ui.viewmodel.RecordViewModel";
 
       static String com_auranote_app_ui_viewmodel_SettingsViewModel = "com.auranote.app.ui.viewmodel.SettingsViewModel";
 
-      static String com_auranote_app_ui_viewmodel_DetailViewModel = "com.auranote.app.ui.viewmodel.DetailViewModel";
+      @KeepFieldType
+      AIChatViewModel com_auranote_app_ui_viewmodel_AIChatViewModel2;
+
+      @KeepFieldType
+      DetailViewModel com_auranote_app_ui_viewmodel_DetailViewModel2;
 
       @KeepFieldType
       HomeViewModel com_auranote_app_ui_viewmodel_HomeViewModel2;
-
-      @KeepFieldType
-      AIChatViewModel com_auranote_app_ui_viewmodel_AIChatViewModel2;
 
       @KeepFieldType
       RecordViewModel com_auranote_app_ui_viewmodel_RecordViewModel2;
 
       @KeepFieldType
       SettingsViewModel com_auranote_app_ui_viewmodel_SettingsViewModel2;
-
-      @KeepFieldType
-      DetailViewModel com_auranote_app_ui_viewmodel_DetailViewModel2;
     }
   }
 
@@ -501,15 +505,21 @@ public final class DaggerAuraNoteApp_HiltComponents_SingletonC {
 
     @IdentifierNameString
     private static final class LazyClassKeyProvider {
+      static String com_auranote_app_ui_viewmodel_HomeViewModel = "com.auranote.app.ui.viewmodel.HomeViewModel";
+
+      static String com_auranote_app_ui_viewmodel_SettingsViewModel = "com.auranote.app.ui.viewmodel.SettingsViewModel";
+
       static String com_auranote_app_ui_viewmodel_DetailViewModel = "com.auranote.app.ui.viewmodel.DetailViewModel";
 
       static String com_auranote_app_ui_viewmodel_RecordViewModel = "com.auranote.app.ui.viewmodel.RecordViewModel";
 
       static String com_auranote_app_ui_viewmodel_AIChatViewModel = "com.auranote.app.ui.viewmodel.AIChatViewModel";
 
-      static String com_auranote_app_ui_viewmodel_HomeViewModel = "com.auranote.app.ui.viewmodel.HomeViewModel";
+      @KeepFieldType
+      HomeViewModel com_auranote_app_ui_viewmodel_HomeViewModel2;
 
-      static String com_auranote_app_ui_viewmodel_SettingsViewModel = "com.auranote.app.ui.viewmodel.SettingsViewModel";
+      @KeepFieldType
+      SettingsViewModel com_auranote_app_ui_viewmodel_SettingsViewModel2;
 
       @KeepFieldType
       DetailViewModel com_auranote_app_ui_viewmodel_DetailViewModel2;
@@ -519,12 +529,6 @@ public final class DaggerAuraNoteApp_HiltComponents_SingletonC {
 
       @KeepFieldType
       AIChatViewModel com_auranote_app_ui_viewmodel_AIChatViewModel2;
-
-      @KeepFieldType
-      HomeViewModel com_auranote_app_ui_viewmodel_HomeViewModel2;
-
-      @KeepFieldType
-      SettingsViewModel com_auranote_app_ui_viewmodel_SettingsViewModel2;
     }
 
     private static final class SwitchingProvider<T> implements Provider<T> {
@@ -552,13 +556,13 @@ public final class DaggerAuraNoteApp_HiltComponents_SingletonC {
           return (T) new AIChatViewModel(singletonCImpl.provideAIRepositoryProvider.get(), singletonCImpl.onDeviceAIRepositoryProvider.get(), singletonCImpl.provideRecordingRepositoryProvider.get(), singletonCImpl.appPreferencesProvider.get());
 
           case 1: // com.auranote.app.ui.viewmodel.DetailViewModel 
-          return (T) new DetailViewModel(singletonCImpl.provideRecordingRepositoryProvider.get(), singletonCImpl.provideAIRepositoryProvider.get(), singletonCImpl.onDeviceAIRepositoryProvider.get(), singletonCImpl.appPreferencesProvider.get(), singletonCImpl.provideGsonProvider.get());
+          return (T) new DetailViewModel(ApplicationContextModule_ProvideContextFactory.provideContext(singletonCImpl.applicationContextModule), singletonCImpl.provideRecordingRepositoryProvider.get(), singletonCImpl.provideAIRepositoryProvider.get(), singletonCImpl.onDeviceAIRepositoryProvider.get(), singletonCImpl.appPreferencesProvider.get(), singletonCImpl.provideGsonProvider.get());
 
           case 2: // com.auranote.app.ui.viewmodel.HomeViewModel 
           return (T) new HomeViewModel(singletonCImpl.provideRecordingRepositoryProvider.get());
 
           case 3: // com.auranote.app.ui.viewmodel.RecordViewModel 
-          return (T) new RecordViewModel(singletonCImpl.audioRecorderManagerProvider.get(), singletonCImpl.provideRecordingRepositoryProvider.get(), singletonCImpl.appPreferencesProvider.get());
+          return (T) new RecordViewModel(ApplicationContextModule_ProvideContextFactory.provideContext(singletonCImpl.applicationContextModule), singletonCImpl.audioRecorderManagerProvider.get(), singletonCImpl.liveTranscriptionManagerProvider.get(), singletonCImpl.provideRecordingRepositoryProvider.get(), singletonCImpl.appPreferencesProvider.get());
 
           case 4: // com.auranote.app.ui.viewmodel.SettingsViewModel 
           return (T) new SettingsViewModel(singletonCImpl.appPreferencesProvider.get());
@@ -636,6 +640,17 @@ public final class DaggerAuraNoteApp_HiltComponents_SingletonC {
 
 
     }
+
+    @Override
+    public void injectRecordingService(RecordingService recordingService) {
+      injectRecordingService2(recordingService);
+    }
+
+    private RecordingService injectRecordingService2(RecordingService instance) {
+      RecordingService_MembersInjector.injectRecorderManager(instance, singletonCImpl.audioRecorderManagerProvider.get());
+      RecordingService_MembersInjector.injectAudioFocusManager(instance, singletonCImpl.audioFocusManagerProvider.get());
+      return instance;
+    }
   }
 
   private static final class SingletonCImpl extends AuraNoteApp_HiltComponents.SingletonC {
@@ -662,6 +677,10 @@ public final class DaggerAuraNoteApp_HiltComponents_SingletonC {
     private Provider<RecordingRepository> provideRecordingRepositoryProvider;
 
     private Provider<AudioRecorderManager> audioRecorderManagerProvider;
+
+    private Provider<LiveTranscriptionManager> liveTranscriptionManagerProvider;
+
+    private Provider<AudioFocusManager> audioFocusManagerProvider;
 
     private SingletonCImpl(ApplicationContextModule applicationContextModuleParam) {
       this.applicationContextModule = applicationContextModuleParam;
@@ -693,6 +712,8 @@ public final class DaggerAuraNoteApp_HiltComponents_SingletonC {
       this.onDeviceAIRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<OnDeviceAIRepository>(singletonCImpl, 7));
       this.provideRecordingRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<RecordingRepository>(singletonCImpl, 8));
       this.audioRecorderManagerProvider = DoubleCheck.provider(new SwitchingProvider<AudioRecorderManager>(singletonCImpl, 9));
+      this.liveTranscriptionManagerProvider = DoubleCheck.provider(new SwitchingProvider<LiveTranscriptionManager>(singletonCImpl, 10));
+      this.audioFocusManagerProvider = DoubleCheck.provider(new SwitchingProvider<AudioFocusManager>(singletonCImpl, 11));
     }
 
     @Override
@@ -757,6 +778,12 @@ public final class DaggerAuraNoteApp_HiltComponents_SingletonC {
 
           case 9: // com.auranote.app.service.AudioRecorderManager 
           return (T) new AudioRecorderManager(ApplicationContextModule_ProvideContextFactory.provideContext(singletonCImpl.applicationContextModule));
+
+          case 10: // com.auranote.app.service.LiveTranscriptionManager 
+          return (T) new LiveTranscriptionManager(ApplicationContextModule_ProvideContextFactory.provideContext(singletonCImpl.applicationContextModule));
+
+          case 11: // com.auranote.app.service.AudioFocusManager 
+          return (T) new AudioFocusManager(ApplicationContextModule_ProvideContextFactory.provideContext(singletonCImpl.applicationContextModule));
 
           default: throw new AssertionError(id);
         }

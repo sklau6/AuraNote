@@ -17,6 +17,10 @@
     <item quantity="one">%d Sekunde zurückspulen</item>
     <item quantity="other">%d Sekunden zurückspulen</item>
   </plurals>
+    <string name="ai_generating_summary">KI-Zusammenfassung wird erstellt…</string>
+    <string name="ai_transcribing">Audio wird transkribiert…</string>
+    <string name="api_key_required">OpenAI API-Schlüssel erforderlich</string>
+    <string name="app_description">KI-gestützte Besprechungsnotizen und -transkription</string>
     <string msgid="881409763997275156" name="call_notification_answer_action">"Annehmen"</string>
     <string msgid="8793775615905189152" name="call_notification_answer_video_action">"Video"</string>
     <string msgid="3229508546291798546" name="call_notification_decline_action">"Ablehnen"</string>
@@ -28,6 +32,9 @@
     <string msgid="7573152094250666567" name="close_sheet">"Tabelle schließen"</string>
     <string msgid="8038256446254964252" name="default_error_message">"Ungültige Eingabe"</string>
     <string msgid="6312721426453364202" name="default_popup_window_title">"Pop-up-Fenster"</string>
+    <string name="detail_ai_chat">KI-Chat</string>
+    <string name="detail_summary">Zusammenfassung</string>
+    <string name="detail_transcript">Transkript</string>
     <string msgid="1890207353314751437" name="dropdown_menu">"Drop-down-Menü"</string>
     <string name="exo_controls_cc_disabled_description">Untertitel aktivieren</string>
     <string name="exo_controls_cc_enabled_description">Untertitel deaktivieren</string>
@@ -81,8 +88,14 @@
     <string name="exo_track_surround_7_point_1">7.1-Surround-Sound</string>
     <string name="exo_track_unknown">Unbekannt</string>
     <string name="exo_track_unknown_name">Unbekannt (%1$s)</string>
+    <string name="filter_all">Alle</string>
+    <string name="home_empty_subtitle">Tippe auf das Mikrofon, um aufzunehmen</string>
+    <string name="home_empty_title">Noch keine Aufnahmen</string>
+    <string name="home_search_hint">Aufnahmen suchen…</string>
     <string msgid="6827826412747255547" name="in_progress">"In Bearbeitung"</string>
     <string msgid="7933458017204019916" name="indeterminate">"Teilweise aktiviert"</string>
+    <string name="live_transcription">Live-Transkription</string>
+    <string name="live_transcription_listening">Höre zu… Sprich und deine Worte erscheinen hier.</string>
     <string msgid="2988463736136100848" name="m3c_bottom_sheet_collapse_description">"Ansicht am unteren Rand minimieren"</string>
     <string msgid="1555567894577437024" name="m3c_bottom_sheet_dismiss_description">"Ansicht am unteren Rand schließen"</string>
     <string msgid="8403354765404029791" name="m3c_bottom_sheet_drag_handle_description">"Ziehpunkt"</string>
@@ -139,13 +152,38 @@
     <string msgid="6616362054113087709" name="m3c_time_picker_pm">"Nachmittags"</string>
     <string msgid="1805687647081129904" name="m3c_tooltip_long_press_label">"Kurzinfo anzeigen"</string>
     <string msgid="5460405025248574620" name="m3c_tooltip_pane_description">"Kurzinfo"</string>
+    <string name="minutes_action_items">Aufgaben</string>
+    <string name="minutes_executive_summary">Zusammenfassung</string>
+    <string name="minutes_generate">Besprechungsprotokoll erstellen</string>
+    <string name="minutes_key_decisions">Wichtige Entscheidungen</string>
+    <string name="minutes_key_points">Besprochene Punkte</string>
+    <string name="minutes_next_steps">Nächste Schritte</string>
     <string msgid="542007171693138492" name="navigation_menu">"Navigationsmenü"</string>
     <string msgid="6610465462668679431" name="not_selected">"Nicht ausgewählt"</string>
+    <string name="notif_pause">Pause</string>
+    <string name="notif_paused_text">Aufnahme pausiert.</string>
+    <string name="notif_recording_text">Deine Besprechung wird aufgenommen.</string>
+    <string name="notif_recording_title">AuraNote — Aufnahme läuft</string>
+    <string name="notif_resume">Fortsetzen</string>
+    <string name="notif_stop">Stopp</string>
     <string msgid="875452955155264703" name="off">"Aus"</string>
     <string msgid="8655164131929253426" name="on">"An"</string>
+    <string name="onboarding_get_started">Loslegen</string>
+    <string name="onboarding_next">Weiter</string>
+    <string name="onboarding_skip">Überspringen</string>
     <string msgid="5941395253238309765" name="range_end">"Bereichsende"</string>
     <string msgid="7097486360902471446" name="range_start">"Bereichsstart"</string>
+    <string name="record_cancel">Abbrechen</string>
+    <string name="record_done">Fertig</string>
+    <string name="record_import">Audiodatei importieren</string>
+    <string name="record_new">Neue Aufnahme</string>
+    <string name="record_paused">Pausiert</string>
+    <string name="record_permission_error">Mikrofonberechtigung erforderlich</string>
+    <string name="record_recording">Aufnahme läuft…</string>
+    <string name="record_title_hint">Titel der Aufnahme (optional)</string>
     <string msgid="6043586758067023" name="selected">"Ausgewählt"</string>
+    <string name="settings_api_key">OpenAI API-Schlüssel</string>
+    <string name="settings_title">Einstellungen</string>
     <string msgid="6277540029070332960" name="status_bar_notification_info_overflow">"999+"</string>
     <string msgid="2561197295334830845" name="switch_role">"Wechseln"</string>
     <string msgid="1672349317127674378" name="tab">"Tab"</string>

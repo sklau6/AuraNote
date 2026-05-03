@@ -1,6 +1,8 @@
 package com.auranote.app.ui.viewmodel
 
 import android.content.Context
+import android.os.Build
+import android.speech.SpeechRecognizer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.auranote.app.data.api.ChatApiMessage
@@ -12,7 +14,9 @@ import com.auranote.app.data.model.TranscriptSegment
 import com.auranote.app.data.model.TranscriptionStatus
 import com.auranote.app.data.preferences.AppPreferences
 import com.auranote.app.data.repository.AIRepository
+import com.auranote.app.data.repository.GeminiRepository
 import com.auranote.app.data.repository.OnDeviceAIRepository
+import dagger.hilt.android.qualifiers.ApplicationContext
 import com.auranote.app.data.repository.RecordingRepository
 import com.auranote.app.util.FileUtils
 import com.google.gson.Gson
@@ -42,13 +46,17 @@ data class DetailUiState(
     val isPlaying: Boolean = false,
     val error: String? = null,
     val transcriptSearchQuery: String = "",
-    val apiKeyMissing: Boolean = false
+    val apiKeyMissing: Boolean = false,
+    val transcribeLanguage: String = "auto",
+    val needsLanguagePack: Boolean = false
 )
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
+    @ApplicationContext private val context: Context,
     private val recordingRepository: RecordingRepository,
     private val aiRepository: AIRepository,
+    private val geminiRepository: GeminiRepository,
     private val onDeviceAI: OnDeviceAIRepository,
     private val preferences: AppPreferences,
     private val gson: Gson
@@ -82,6 +90,7 @@ class DetailViewModel @Inject constructor(
     fun transcribeRecording() {
         val recording = _uiState.value.recording ?: return
         viewModelScope.launch {
+            try {
             val apiKey = preferences.apiKey.first()
             val file = File(recording.filePath)
             if (!file.exists()) {
@@ -93,22 +102,33 @@ class DetailViewModel @Inject constructor(
             recordingRepository.updateTranscriptionStatus(recording.id, TranscriptionStatus.IN_PROGRESS.name)
 
             if (apiKey.isBlank()) {
-                // Fallback: on-device Gemini Nano speech recognition
-                onDeviceAI.transcribeAudioFile(file).fold(
+                // Use Google's on-device speech recognition — no API key required.
+                // Append device diagnostics to any failure so it is visible on-screen.
+                val diagInfo = "\n\n[Device: Android ${Build.VERSION.RELEASE} (API ${Build.VERSION.SDK_INT}), " +
+                    "Recognition available: ${SpeechRecognizer.isRecognitionAvailable(context)}, " +
+                    "File: ${file.name} (${file.length()} bytes)]"
+                val lang = _uiState.value.transcribeLanguage
+                onDeviceAI.transcribeAudioFile(file, lang).fold(
                     onSuccess = { text ->
                         val segments = buildTranscriptSegments(recording.id, text, null)
                         recordingRepository.deleteTranscriptSegments(recording.id)
                         recordingRepository.insertTranscriptSegments(segments)
                         recordingRepository.updateTranscriptionStatus(recording.id, TranscriptionStatus.COMPLETED.name)
                         _uiState.update { it.copy(isTranscribing = false) }
+                        // Auto-generate summary immediately after transcription.
                         generateSummaryOnDevice(recording.id)
                     },
                     onFailure = { e ->
                         recordingRepository.updateTranscriptionStatus(recording.id, TranscriptionStatus.ERROR.name)
+                        val errMsg = e.message ?: "On-device transcription failed"
+                        val isPackError = errMsg.startsWith(OnDeviceAIRepository.NEEDS_LANGUAGE_PACK)
+                        val displayMsg = if (isPackError) errMsg.removePrefix(OnDeviceAIRepository.NEEDS_LANGUAGE_PACK + ": ") + diagInfo
+                                        else errMsg + diagInfo
                         _uiState.update {
                             it.copy(
                                 isTranscribing = false,
-                                error = "On-device transcription failed: ${e.message}. Add an OpenAI API key in Settings for cloud transcription."
+                                needsLanguagePack = isPackError,
+                                error = displayMsg
                             )
                         }
                     }
@@ -141,13 +161,32 @@ class DetailViewModel @Inject constructor(
                     }
                 )
             }
+            } catch (t: Throwable) {
+                android.util.Log.e("DetailViewModel", "transcribeRecording crashed", t)
+                try {
+                    recordingRepository.updateTranscriptionStatus(
+                        recording.id, TranscriptionStatus.ERROR.name
+                    )
+                } catch (_: Throwable) {}
+                _uiState.update {
+                    it.copy(
+                        isTranscribing = false,
+                        error = "Transcription crashed: ${t.javaClass.simpleName}: ${t.message}" +
+                            "\n\n[Android ${Build.VERSION.RELEASE} (API ${Build.VERSION.SDK_INT}), " +
+                            "Recognition: ${SpeechRecognizer.isRecognitionAvailable(context)}]"
+                    )
+                }
+            }
         }
     }
 
     private suspend fun assignSpeakers(recordingId: Long, segments: List<TranscriptSegment>, apiKey: String) {
         _uiState.update { it.copy(isAssigningSpeakers = true) }
         val fullText = segments.joinToString(" ") { it.text }
-        aiRepository.assignSpeakers(apiKey, segments, fullText).fold(
+        // Prefer Gemini; fall back to OpenAI
+        val result = geminiRepository.assignSpeakers(segments, fullText)
+            .recoverCatching { aiRepository.assignSpeakers(apiKey, segments, fullText).getOrThrow() }
+        result.fold(
             onSuccess = { labeled ->
                 recordingRepository.insertTranscriptSegments(labeled)
                 val speakerCount = labeled.map { it.speakerLabel }.distinct().size
@@ -196,11 +235,15 @@ class DetailViewModel @Inject constructor(
         val transcriptText = recordingRepository.getFullTranscriptText(recordingId) ?: return
         if (transcriptText.isBlank()) return
 
+        val language = preferences.transcriptionLanguage.first()
         _uiState.update { it.copy(isGeneratingSummary = true) }
-        aiRepository.generateSummary(apiKey, recordingId, transcriptText).fold(
+        // Prefer Gemini; fall back to OpenAI
+        val result = geminiRepository.generateMeetingMinutes(recordingId, transcriptText, language)
+            .recoverCatching { aiRepository.generateMeetingMinutes(apiKey, recordingId, transcriptText, language).getOrThrow() }
+        result.fold(
             onSuccess = { },
             onFailure = { e ->
-                _uiState.update { it.copy(error = "Summary generation failed: ${e.message}") }
+                _uiState.update { it.copy(error = "Meeting minutes generation failed: ${e.message}") }
             }
         )
         _uiState.update { it.copy(isGeneratingSummary = false) }
@@ -219,16 +262,20 @@ class DetailViewModel @Inject constructor(
 
             _uiState.update { it.copy(isGeneratingStudy = true) }
             launch {
-                aiRepository.generateFlashcards(apiKey, recording.id, transcriptText).fold(
-                    onSuccess = { },
-                    onFailure = { e -> _uiState.update { it.copy(error = "Flashcards failed: ${e.message}") } }
-                )
+                geminiRepository.generateFlashcards(recording.id, transcriptText)
+                    .recoverCatching { aiRepository.generateFlashcards(apiKey, recording.id, transcriptText).getOrThrow() }
+                    .fold(
+                        onSuccess = { },
+                        onFailure = { e -> _uiState.update { it.copy(error = "Flashcards failed: ${e.message}") } }
+                    )
             }
             launch {
-                aiRepository.generateQuiz(apiKey, recording.id, transcriptText).fold(
-                    onSuccess = { },
-                    onFailure = { e -> _uiState.update { it.copy(error = "Quiz generation failed: ${e.message}") } }
-                )
+                geminiRepository.generateQuiz(recording.id, transcriptText)
+                    .recoverCatching { aiRepository.generateQuiz(apiKey, recording.id, transcriptText).getOrThrow() }
+                    .fold(
+                        onSuccess = { },
+                        onFailure = { e -> _uiState.update { it.copy(error = "Quiz generation failed: ${e.message}") } }
+                    )
             }
             _uiState.update { it.copy(isGeneratingStudy = false) }
         }
@@ -307,7 +354,19 @@ ${transcriptText.take(3000)}
         _uiState.update { it.copy(isGeneratingStudy = false) }
     }
 
-    fun clearError() = _uiState.update { it.copy(error = null, apiKeyMissing = false) }
+    fun clearError() = _uiState.update { it.copy(error = null, apiKeyMissing = false, needsLanguagePack = false) }
+
+    fun updateTranscriptSegment(segmentId: Long, newText: String) {
+        viewModelScope.launch {
+            val segment = _uiState.value.segments.find { it.id == segmentId } ?: return@launch
+            val updated = segment.copy(text = newText)
+            recordingRepository.updateTranscriptSegment(updated)
+        }
+    }
+
+    fun setTranscribeLanguage(lang: String) {
+        _uiState.update { it.copy(transcribeLanguage = lang) }
+    }
 
     private fun buildTranscriptSegments(
         recordingId: Long,

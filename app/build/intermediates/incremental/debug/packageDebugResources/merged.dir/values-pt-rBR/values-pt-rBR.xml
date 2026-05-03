@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ai_generating_summary">Gerando resumo IA…</string>
+    <string name="ai_transcribing">Transcrevendo áudio…</string>
+    <string name="api_key_required">Chave OpenAI necessária</string>
+    <string name="app_description">Notas e transcrição de reuniões com IA</string>
+    <string name="detail_ai_chat">Chat IA</string>
+    <string name="detail_summary">Resumo</string>
+    <string name="detail_transcript">Transcrição</string>
+    <string name="filter_all">Todas</string>
+    <string name="home_empty_subtitle">Toque no microfone para começar a gravar</string>
+    <string name="home_empty_title">Nenhuma gravação ainda</string>
+    <string name="home_search_hint">Pesquisar gravações…</string>
+    <string name="live_transcription">Transcrição ao vivo</string>
+    <string name="live_transcription_listening">Ouvindo… Comece a falar e suas palavras aparecerão aqui.</string>
+    <string name="minutes_action_items">Itens de ação</string>
+    <string name="minutes_executive_summary">Resumo executivo</string>
+    <string name="minutes_generate">Gerar ata da reunião</string>
+    <string name="minutes_key_decisions">Decisões principais</string>
+    <string name="minutes_key_points">Pontos discutidos</string>
+    <string name="minutes_next_steps">Próximos passos</string>
+    <string name="notif_pause">Pausar</string>
+    <string name="notif_paused_text">Gravação pausada.</string>
+    <string name="notif_recording_text">Sua reunião está sendo gravada.</string>
+    <string name="notif_recording_title">AuraNote — Gravando</string>
+    <string name="notif_resume">Retomar</string>
+    <string name="notif_stop">Parar</string>
+    <string name="onboarding_get_started">Começar</string>
+    <string name="onboarding_next">Próximo</string>
+    <string name="onboarding_skip">Pular</string>
+    <string name="record_cancel">Cancelar</string>
+    <string name="record_done">Pronto</string>
+    <string name="record_import">Importar arquivo de áudio</string>
+    <string name="record_new">Nova gravação</string>
+    <string name="record_paused">Pausado</string>
+    <string name="record_permission_error">Permissão do microfone necessária</string>
+    <string name="record_recording">Gravando…</string>
+    <string name="record_title_hint">Título (opcional)</string>
+    <string name="settings_api_key">Chave da API OpenAI</string>
+    <string name="settings_title">Configurações</string>
+</resources>

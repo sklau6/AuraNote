@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AuraNote</string>
+    <string name="app_description">AI 驱动的会议记录与转写</string>
+
+    <string name="onboarding_skip">跳过</string>
+    <string name="onboarding_next">下一步</string>
+    <string name="onboarding_get_started">开始使用</string>
+
+    <string name="home_title">AuraNote</string>
+    <string name="home_empty_title">还没有录音</string>
+    <string name="home_empty_subtitle">点击麦克风按钮开始录音</string>
+    <string name="home_search_hint">搜索录音…</string>
+    <string name="filter_all">全部</string>
+
+    <string name="record_new">新录音</string>
+    <string name="record_recording">正在录音…</string>
+    <string name="record_paused">已暂停</string>
+    <string name="record_finishing">完成中…</string>
+    <string name="record_cancel">取消</string>
+    <string name="record_done">完成</string>
+    <string name="record_title_hint">录音标题（可选）</string>
+    <string name="record_import">导入音频文件</string>
+    <string name="record_permission_error">需要麦克风权限才能录音</string>
+
+    <string name="detail_transcript">转写文字</string>
+    <string name="detail_summary">摘要</string>
+    <string name="detail_ai_chat">AI 对话</string>
+    <string name="detail_study">学习</string>
+    <string name="detail_transcribe">使用 AI 转写</string>
+    <string name="detail_retry">重新转写</string>
+    <string name="detail_share">分享</string>
+    <string name="detail_edit_title">编辑标题</string>
+
+    <string name="ai_transcribing">正在转写音频…</string>
+    <string name="ai_identifying_speakers">正在识别说话人…</string>
+    <string name="ai_generating_summary">正在生成 AI 摘要…</string>
+    <string name="ai_generating_study">正在生成学习材料…</string>
+    <string name="ai_chat_hint">就你的录音提问…</string>
+    <string name="api_key_required">需要 OpenAI API 密钥</string>
+
+    <string name="settings_title">设置</string>
+    <string name="settings_api_key">OpenAI API 密钥</string>
+    <string name="settings_language">转写语言</string>
+    <string name="settings_speaker_detection">说话人识别</string>
+    <string name="settings_auto_transcribe">自动转写</string>
+    <string name="settings_quality">录音质量</string>
+    <string name="settings_save">保存 API 密钥</string>
+    <string name="settings_saved">✓ 已保存</string>
+
+    <string name="status_pending">等待中</string>
+    <string name="status_processing">处理中</string>
+    <string name="status_transcribed">已转写</string>
+    <string name="status_error">错误</string>
+
+    <string name="error_recording_failed">无法开始录音，请检查麦克风权限。</string>
+    <string name="error_file_not_found">未找到音频文件</string>
+    <string name="error_transcription_failed">转写失败，请检查 API 密钥和网络。</string>
+    <string name="error_summary_failed">摘要生成失败。</string>
+    <string name="error_import_failed">导入音频文件失败</string>
+
+    <string name="notif_channel_recording">录音</string>
+    <string name="notif_channel_recording_desc">会议录制过程中显示的持久通知。</string>
+    <string name="notif_recording_title">AuraNote — 正在录音</string>
+    <string name="notif_recording_text">正在记录您的会议。</string>
+    <string name="notif_paused_text">录音已暂停。</string>
+    <string name="notif_pause">暂停</string>
+    <string name="notif_resume">继续</string>
+    <string name="notif_stop">停止</string>
+
+    <string name="live_transcription">实时转写</string>
+    <string name="live_transcription_listening">正在听… 开始说话，文字将实时出现在这里。</string>
+    <string name="live_transcription_unavailable">此设备不支持本地语音识别。</string>
+
+    <string name="minutes_executive_summary">执行摘要</string>
+    <string name="minutes_key_decisions">关键决策</string>
+    <string name="minutes_action_items">行动项</string>
+    <string name="minutes_key_points">讨论要点</string>
+    <string name="minutes_next_steps">后续步骤</string>
+    <string name="minutes_generate">生成会议纪要</string>
+</resources>

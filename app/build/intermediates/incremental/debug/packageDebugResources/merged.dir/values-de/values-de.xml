@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ai_generating_summary">KI-Zusammenfassung wird erstellt…</string>
+    <string name="ai_transcribing">Audio wird transkribiert…</string>
+    <string name="api_key_required">OpenAI API-Schlüssel erforderlich</string>
+    <string name="app_description">KI-gestützte Besprechungsnotizen und -transkription</string>
+    <string name="detail_ai_chat">KI-Chat</string>
+    <string name="detail_summary">Zusammenfassung</string>
+    <string name="detail_transcript">Transkript</string>
+    <string name="filter_all">Alle</string>
+    <string name="home_empty_subtitle">Tippe auf das Mikrofon, um aufzunehmen</string>
+    <string name="home_empty_title">Noch keine Aufnahmen</string>
+    <string name="home_search_hint">Aufnahmen suchen…</string>
+    <string name="live_transcription">Live-Transkription</string>
+    <string name="live_transcription_listening">Höre zu… Sprich und deine Worte erscheinen hier.</string>
+    <string name="minutes_action_items">Aufgaben</string>
+    <string name="minutes_executive_summary">Zusammenfassung</string>
+    <string name="minutes_generate">Besprechungsprotokoll erstellen</string>
+    <string name="minutes_key_decisions">Wichtige Entscheidungen</string>
+    <string name="minutes_key_points">Besprochene Punkte</string>
+    <string name="minutes_next_steps">Nächste Schritte</string>
+    <string name="notif_pause">Pause</string>
+    <string name="notif_paused_text">Aufnahme pausiert.</string>
+    <string name="notif_recording_text">Deine Besprechung wird aufgenommen.</string>
+    <string name="notif_recording_title">AuraNote — Aufnahme läuft</string>
+    <string name="notif_resume">Fortsetzen</string>
+    <string name="notif_stop">Stopp</string>
+    <string name="onboarding_get_started">Loslegen</string>
+    <string name="onboarding_next">Weiter</string>
+    <string name="onboarding_skip">Überspringen</string>
+    <string name="record_cancel">Abbrechen</string>
+    <string name="record_done">Fertig</string>
+    <string name="record_import">Audiodatei importieren</string>
+    <string name="record_new">Neue Aufnahme</string>
+    <string name="record_paused">Pausiert</string>
+    <string name="record_permission_error">Mikrofonberechtigung erforderlich</string>
+    <string name="record_recording">Aufnahme läuft…</string>
+    <string name="record_title_hint">Titel der Aufnahme (optional)</string>
+    <string name="settings_api_key">OpenAI API-Schlüssel</string>
+    <string name="settings_title">Einstellungen</string>
+</resources>

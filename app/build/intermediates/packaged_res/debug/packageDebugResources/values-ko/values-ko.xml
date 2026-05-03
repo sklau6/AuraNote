@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ai_generating_summary">AI 요약 생성 중…</string>
+    <string name="ai_transcribing">오디오 전사 중…</string>
+    <string name="api_key_required">OpenAI API 키가 필요합니다</string>
+    <string name="app_description">AI 기반 회의 녹음 및 전사</string>
+    <string name="detail_ai_chat">AI 채팅</string>
+    <string name="detail_summary">요약</string>
+    <string name="detail_transcript">전사</string>
+    <string name="filter_all">전체</string>
+    <string name="home_empty_subtitle">마이크 버튼을 눌러 녹음 시작</string>
+    <string name="home_empty_title">아직 녹음이 없습니다</string>
+    <string name="home_search_hint">녹음 검색…</string>
+    <string name="live_transcription">실시간 전사</string>
+    <string name="live_transcription_listening">듣는 중… 말씀하시면 텍스트가 여기에 표시됩니다.</string>
+    <string name="minutes_action_items">실행 항목</string>
+    <string name="minutes_executive_summary">요약</string>
+    <string name="minutes_generate">회의록 생성</string>
+    <string name="minutes_key_decisions">주요 결정</string>
+    <string name="minutes_key_points">논의 포인트</string>
+    <string name="minutes_next_steps">다음 단계</string>
+    <string name="notif_pause">일시 정지</string>
+    <string name="notif_paused_text">녹음이 일시 정지되었습니다.</string>
+    <string name="notif_recording_text">회의를 녹음하고 있습니다.</string>
+    <string name="notif_recording_title">AuraNote — 녹음 중</string>
+    <string name="notif_resume">재개</string>
+    <string name="notif_stop">정지</string>
+    <string name="onboarding_get_started">시작하기</string>
+    <string name="onboarding_next">다음</string>
+    <string name="onboarding_skip">건너뛰기</string>
+    <string name="record_cancel">취소</string>
+    <string name="record_done">완료</string>
+    <string name="record_import">오디오 파일 가져오기</string>
+    <string name="record_new">새 녹음</string>
+    <string name="record_paused">일시 정지됨</string>
+    <string name="record_permission_error">녹음하려면 마이크 권한이 필요합니다</string>
+    <string name="record_recording">녹음 중…</string>
+    <string name="record_title_hint">녹음 제목 (선택)</string>
+    <string name="settings_api_key">OpenAI API 키</string>
+    <string name="settings_title">설정</string>
+</resources>

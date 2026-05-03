@@ -25,6 +25,10 @@
     <item quantity="many">ترجيع الفيديو بمقدار %d ثانية</item>
     <item quantity="other">ترجيع الفيديو بمقدار %d ثانية</item>
   </plurals>
+    <string name="ai_generating_summary">جارٍ إنشاء الملخص…</string>
+    <string name="ai_transcribing">جارٍ تفريغ الصوت…</string>
+    <string name="api_key_required">يلزم مفتاح OpenAI API</string>
+    <string name="app_description">ملاحظات اجتماعات مدعومة بالذكاء الاصطناعي</string>
     <string msgid="881409763997275156" name="call_notification_answer_action">"ردّ"</string>
     <string msgid="8793775615905189152" name="call_notification_answer_video_action">"فيديو"</string>
     <string msgid="3229508546291798546" name="call_notification_decline_action">"رفض"</string>
@@ -36,6 +40,9 @@
     <string msgid="7573152094250666567" name="close_sheet">"إغلاق الورقة"</string>
     <string msgid="8038256446254964252" name="default_error_message">"إدخال غير صالح"</string>
     <string msgid="6312721426453364202" name="default_popup_window_title">"نافذة منبثقة"</string>
+    <string name="detail_ai_chat">محادثة AI</string>
+    <string name="detail_summary">الملخص</string>
+    <string name="detail_transcript">النص</string>
     <string msgid="1890207353314751437" name="dropdown_menu">"قائمة منسدلة"</string>
     <string name="exo_controls_cc_disabled_description">تفعيل الترجمة</string>
     <string name="exo_controls_cc_enabled_description">إيقاف الترجمة</string>
@@ -89,8 +96,14 @@
     <string name="exo_track_surround_7_point_1">صوت مجسّم 7.1</string>
     <string name="exo_track_unknown">غير معروف</string>
     <string name="exo_track_unknown_name">غير معروف (%1$s)</string>
+    <string name="filter_all">الكل</string>
+    <string name="home_empty_subtitle">اضغط على الميكروفون لبدء التسجيل</string>
+    <string name="home_empty_title">لا توجد تسجيلات بعد</string>
+    <string name="home_search_hint">ابحث في التسجيلات…</string>
     <string msgid="6827826412747255547" name="in_progress">"قيد التقدم"</string>
     <string msgid="7933458017204019916" name="indeterminate">"تم وضع علامة في المربّع بشكل جزئي"</string>
+    <string name="live_transcription">تفريغ مباشر</string>
+    <string name="live_transcription_listening">يستمع… ابدأ بالتحدث وستظهر كلماتك هنا.</string>
     <string msgid="2988463736136100848" name="m3c_bottom_sheet_collapse_description">"تصغير البطاقة السفلية"</string>
     <string msgid="1555567894577437024" name="m3c_bottom_sheet_dismiss_description">"إغلاق البطاقة السفلية"</string>
     <string msgid="8403354765404029791" name="m3c_bottom_sheet_drag_handle_description">"مقبض السحب"</string>
@@ -147,13 +160,38 @@
     <string msgid="6616362054113087709" name="m3c_time_picker_pm">"م"</string>
     <string msgid="1805687647081129904" name="m3c_tooltip_long_press_label">"إظهار التلميح"</string>
     <string msgid="5460405025248574620" name="m3c_tooltip_pane_description">"تلميح"</string>
+    <string name="minutes_action_items">الإجراءات المطلوبة</string>
+    <string name="minutes_executive_summary">الملخص التنفيذي</string>
+    <string name="minutes_generate">إنشاء محضر اجتماع</string>
+    <string name="minutes_key_decisions">القرارات الرئيسية</string>
+    <string name="minutes_key_points">نقاط النقاش</string>
+    <string name="minutes_next_steps">الخطوات التالية</string>
     <string msgid="542007171693138492" name="navigation_menu">"قائمة تنقل"</string>
     <string msgid="6610465462668679431" name="not_selected">"غير محدّد"</string>
+    <string name="notif_pause">إيقاف مؤقت</string>
+    <string name="notif_paused_text">تم إيقاف التسجيل مؤقتًا.</string>
+    <string name="notif_recording_text">جارٍ تسجيل اجتماعك.</string>
+    <string name="notif_recording_title">AuraNote — يسجل الآن</string>
+    <string name="notif_resume">استئناف</string>
+    <string name="notif_stop">إيقاف</string>
     <string msgid="875452955155264703" name="off">"غير مفعّل"</string>
     <string msgid="8655164131929253426" name="on">"مفعّل"</string>
+    <string name="onboarding_get_started">ابدأ</string>
+    <string name="onboarding_next">التالي</string>
+    <string name="onboarding_skip">تخطٍ</string>
     <string msgid="5941395253238309765" name="range_end">"نهاية النطاق"</string>
     <string msgid="7097486360902471446" name="range_start">"بداية النطاق"</string>
+    <string name="record_cancel">إلغاء</string>
+    <string name="record_done">تم</string>
+    <string name="record_import">استيراد ملف صوتي</string>
+    <string name="record_new">تسجيل جديد</string>
+    <string name="record_paused">متوقف مؤقتًا</string>
+    <string name="record_permission_error">يلزم إذن الميكروفون للتسجيل</string>
+    <string name="record_recording">يسجّل…</string>
+    <string name="record_title_hint">عنوان التسجيل (اختياري)</string>
     <string msgid="6043586758067023" name="selected">"محدّد"</string>
+    <string name="settings_api_key">مفتاح OpenAI API</string>
+    <string name="settings_title">الإعدادات</string>
     <string msgid="6277540029070332960" name="status_bar_notification_info_overflow">"999+"</string>
     <string msgid="2561197295334830845" name="switch_role">"تبديل"</string>
     <string msgid="1672349317127674378" name="tab">"علامة تبويب"</string>

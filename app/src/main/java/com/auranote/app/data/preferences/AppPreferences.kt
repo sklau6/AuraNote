@@ -26,6 +26,7 @@ class AppPreferences @Inject constructor(
         val KEY_SPEAKER_DETECTION = booleanPreferencesKey("speaker_detection")
         val KEY_AUTO_TRANSCRIBE = booleanPreferencesKey("auto_transcribe")
         val KEY_RECORDING_QUALITY = stringPreferencesKey("recording_quality")
+        val KEY_THEME = stringPreferencesKey("app_theme")
     }
 
     val apiKey: Flow<String> = context.dataStore.data.map { it[KEY_API_KEY] ?: "" }
@@ -34,6 +35,9 @@ class AppPreferences @Inject constructor(
     val speakerDetection: Flow<Boolean> = context.dataStore.data.map { it[KEY_SPEAKER_DETECTION] ?: true }
     val autoTranscribe: Flow<Boolean> = context.dataStore.data.map { it[KEY_AUTO_TRANSCRIBE] ?: true }
     val recordingQuality: Flow<String> = context.dataStore.data.map { it[KEY_RECORDING_QUALITY] ?: "HIGH" }
+
+    /** Persisted theme mode: "DARK", "LIGHT", or "SYSTEM". */
+    val appTheme: Flow<String> = context.dataStore.data.map { it[KEY_THEME] ?: "DARK" }
 
     suspend fun setApiKey(key: String) {
         context.dataStore.edit { it[KEY_API_KEY] = key }
@@ -57,5 +61,9 @@ class AppPreferences @Inject constructor(
 
     suspend fun setRecordingQuality(quality: String) {
         context.dataStore.edit { it[KEY_RECORDING_QUALITY] = quality }
+    }
+
+    suspend fun setAppTheme(theme: String) {
+        context.dataStore.edit { it[KEY_THEME] = theme }
     }
 }

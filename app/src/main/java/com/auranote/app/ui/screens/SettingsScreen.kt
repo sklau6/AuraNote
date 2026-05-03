@@ -14,12 +14,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AutoAwesome
+import androidx.compose.material.icons.filled.Brightness4
+import androidx.compose.material.icons.filled.Brightness7
+import androidx.compose.material.icons.filled.BrightnessAuto
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.Person
@@ -146,7 +150,7 @@ fun SettingsScreen(
             GlassCard(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text(
-                        "OpenAI API Key",
+                        "OpenAI API Key (optional — Gemini AI is built-in)",
                         style = MaterialTheme.typography.titleSmall,
                         color = TextPrimary,
                         fontWeight = FontWeight.SemiBold
@@ -162,7 +166,7 @@ fun SettingsScreen(
                         value = apiKeyInput,
                         onValueChange = { apiKeyInput = it },
                         modifier = Modifier.fillMaxWidth(),
-                        placeholder = { Text("sk-...", color = TextTertiary) },
+                        placeholder = { Text("sk-... (optional)", color = TextTertiary) },
                         visualTransformation = if (uiState.apiKeyVisible) {
                             VisualTransformation.None
                         } else {
@@ -196,7 +200,7 @@ fun SettingsScreen(
                     )
                     Spacer(Modifier.height(8.dp))
                     InfoBanner(
-                        message = "Get your API key from platform.openai.com. Your key is stored locally and never shared.",
+                        message = "Gemini AI (15 keys, 6 models) is built-in and requires no setup. Add an OpenAI key only for Whisper transcription or as fallback.",
                         icon = Icons.Default.Security,
                         tint = TextTertiary
                     )
@@ -259,6 +263,68 @@ fun SettingsScreen(
                         checked = uiState.autoTranscribe,
                         onToggle = viewModel::setAutoTranscribe
                     )
+                }
+            }
+
+            Spacer(Modifier.height(20.dp))
+
+            SettingsSectionTitle(title = "Appearance", icon = Icons.Default.Brightness4)
+            Spacer(Modifier.height(8.dp))
+
+            GlassCard(modifier = Modifier.fillMaxWidth()) {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Text(
+                        "Theme",
+                        style = MaterialTheme.typography.titleSmall,
+                        color = TextPrimary,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                    Spacer(Modifier.height(12.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        listOf(
+                            Triple("DARK",   "Dark",   Icons.Default.Brightness4),
+                            Triple("LIGHT",  "Light",  Icons.Default.Brightness7),
+                            Triple("SYSTEM", "System", Icons.Default.BrightnessAuto)
+                        ).forEach { (code, label, icon) ->
+                            val selected = uiState.appTheme == code
+                            Column(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .clip(RoundedCornerShape(14.dp))
+                                    .background(
+                                        if (selected) PurplePrimary.copy(alpha = 0.18f)
+                                        else NavyElevated.copy(alpha = 0.4f)
+                                    )
+                                    .clickable { viewModel.setTheme(code) }
+                                    .padding(vertical = 14.dp),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.spacedBy(6.dp)
+                            ) {
+                                Icon(
+                                    icon, null,
+                                    tint = if (selected) PurplePrimary else TextSecondary,
+                                    modifier = Modifier.size(22.dp)
+                                )
+                                Text(
+                                    label,
+                                    style = MaterialTheme.typography.labelMedium,
+                                    color = if (selected) PurplePrimary else TextSecondary,
+                                    fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal
+                                )
+                                if (selected) {
+                                    Box(
+                                        modifier = Modifier
+                                            .size(6.dp)
+                                            .clip(CircleShape)
+                                            .background(PurplePrimary)
+                                    )
+                                }
+                            }
+                        }
+                    }
                 }
             }
 

@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
@@ -72,7 +73,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -242,8 +245,14 @@ fun DetailScreen(
                 Spacer(Modifier.height(12.dp))
 
                 if (rec.transcriptionStatus == TranscriptionStatus.PENDING || rec.transcriptionStatus == TranscriptionStatus.ERROR) {
+                    LanguagePickerRow(
+                        selected = uiState.transcribeLanguage,
+                        onSelect = { viewModel.setTranscribeLanguage(it) },
+                        modifier = Modifier.padding(horizontal = 16.dp)
+                    )
+                    Spacer(Modifier.height(8.dp))
                     GradientButton(
-                        text = if (rec.transcriptionStatus == TranscriptionStatus.ERROR) "Retry Transcription" else "Transcribe with AI",
+                        text = if (rec.transcriptionStatus == TranscriptionStatus.ERROR) "Retry Transcription" else "Transcribe Audio",
                         onClick = { viewModel.transcribeRecording() },
                         icon = Icons.Default.AutoAwesome,
                         modifier = Modifier.padding(horizontal = 16.dp).fillMaxWidth()
@@ -253,7 +262,18 @@ fun DetailScreen(
 
                 if (uiState.isTranscribing) {
                     LoadingCard(
-                        message = if (uiState.isAssigningSpeakers) "Identifying speakers..." else "Transcribing audio...",
+                        message = if (uiState.isAssigningSpeakers) "Identifying speakers..."
+                                  else "Playing audio for transcription\u2009\u2014\u2009please stay quiet\u2026",
+                        modifier = Modifier.padding(horizontal = 16.dp)
+                    )
+                    Spacer(Modifier.height(8.dp))
+                }
+
+                uiState.error?.let { errorMsg ->
+                    TranscriptionErrorBanner(
+                        message = errorMsg,
+                        needsLanguagePack = uiState.needsLanguagePack,
+                        onDismiss = { viewModel.clearError() },
                         modifier = Modifier.padding(horizontal = 16.dp)
                     )
                     Spacer(Modifier.height(8.dp))
@@ -360,7 +380,7 @@ private fun TranscriptTab(
                     )
                     Spacer(Modifier.height(12.dp))
                     Text("No transcript yet", color = TextSecondary, style = MaterialTheme.typography.titleSmall)
-                    Text("Tap 'Transcribe with AI' to generate a transcript", color = TextTertiary, style = MaterialTheme.typography.bodySmall)
+                    Text("Tap 'Transcribe Audio' to generate a transcript", color = TextTertiary, style = MaterialTheme.typography.bodySmall)
                 }
             }
         } else {
@@ -371,7 +391,8 @@ private fun TranscriptTab(
                 items(filteredSegments, key = { it.id }) { seg ->
                     TranscriptSegmentItem(
                         segment = seg,
-                        searchQuery = uiState.transcriptSearchQuery
+                        searchQuery = uiState.transcriptSearchQuery,
+                        onEdit = { newText -> viewModel.updateTranscriptSegment(seg.id, newText) }
                     )
                 }
                 item { Spacer(Modifier.navigationBarsPadding()) }
@@ -827,11 +848,179 @@ private fun QuizQuestionCard(question: QuizQuestion, questionNumber: Int) {
     }
 }
 
+@Composable
+private fun TranscriptionErrorBanner(
+    message: String,
+    onDismiss: () -> Unit,
+    modifier: Modifier = Modifier,
+    needsLanguagePack: Boolean = false
+) {
+    val clipboard = LocalClipboardManager.current
+    val ctx = LocalContext.current
+    var expanded by remember { mutableStateOf(true) }
+    Column(modifier = modifier) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp,
+                    bottomStart = if (expanded) 0.dp else 12.dp,
+                    bottomEnd = if (expanded) 0.dp else 12.dp))
+                .background(Color(0xFF3B1219))
+                .padding(horizontal = 12.dp, vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Icon(
+                Icons.Default.Close,
+                contentDescription = null,
+                tint = RedAccent,
+                modifier = Modifier.size(16.dp)
+            )
+            Text(
+                text = "Transcription Error",
+                style = MaterialTheme.typography.labelMedium,
+                color = RedAccent,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.weight(1f)
+            )
+            TextButton(
+                onClick = { expanded = !expanded },
+                contentPadding = PaddingValues(horizontal = 6.dp, vertical = 0.dp)
+            ) {
+                Text(
+                    if (expanded) "Hide" else "Show",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = TextSecondary
+                )
+            }
+            IconButton(
+                onClick = onDismiss,
+                modifier = Modifier.size(28.dp)
+            ) {
+                Icon(Icons.Default.Close, contentDescription = "Dismiss", tint = TextSecondary, modifier = Modifier.size(14.dp))
+            }
+        }
+        if (expanded) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(bottomStart = 12.dp, bottomEnd = 12.dp))
+                    .background(Color(0xFF2A0A10))
+                    .padding(12.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Text(
+                    text = message,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = Color(0xFFFFB4AB),
+                    lineHeight = 18.sp
+                )
+                if (needsLanguagePack) {
+                    TextButton(
+                        onClick = {
+                            runCatching {
+                                // Open Google's Text-to-Speech / Speech Recognition settings where language packs live
+                                val candidates = listOf(
+                                    android.content.Intent("com.android.settings.TTS_SETTINGS"),
+                                    android.content.Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                                        data = android.net.Uri.parse("package:com.google.android.tts")
+                                        flags = android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+                                    },
+                                    android.content.Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                                        data = android.net.Uri.parse("package:com.google.android.googlequicksearchbox")
+                                        flags = android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+                                    }
+                                )
+                                for (intent in candidates) {
+                                    intent.flags = android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+                                    if (intent.resolveActivity(ctx.packageManager) != null) {
+                                        ctx.startActivity(intent)
+                                        break
+                                    }
+                                }
+                            }
+                        },
+                        contentPadding = PaddingValues(horizontal = 0.dp, vertical = 0.dp)
+                    ) {
+                        Text(
+                            "Open Speech Settings (download language pack)",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = Color(0xFF82B4FF)
+                        )
+                    }
+                }
+                TextButton(
+                    onClick = { clipboard.setText(AnnotatedString(message)) },
+                    contentPadding = PaddingValues(horizontal = 0.dp, vertical = 0.dp)
+                ) {
+                    Text(
+                        "Copy error to clipboard",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = TextSecondary
+                    )
+                }
+            }
+        }
+    }
+}
+
 private fun parseSummaryList(gson: Gson, type: java.lang.reflect.Type, json: String): List<String> {
     if (json.isBlank() || json == "null") return emptyList()
     return try {
         gson.fromJson(json, type) ?: emptyList()
     } catch (e: Exception) {
         if (json.startsWith("[")) emptyList() else listOf(json)
+    }
+}
+
+@Composable
+private fun LanguagePickerRow(
+    selected: String,
+    onSelect: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val languages = listOf(
+        "auto"  to "Auto",
+        "en-US" to "English",
+        "zh-TW" to "中文(繁)",
+        "zh-CN" to "中文(简)",
+        "ja-JP" to "日本語",
+        "ko-KR" to "한국어",
+        "ms-MY" to "Melayu",
+        "fr-FR" to "Français",
+        "de-DE" to "Deutsch",
+        "es-ES" to "Español"
+    )
+    Column(modifier = modifier) {
+        Text(
+            "Language",
+            style = MaterialTheme.typography.labelSmall,
+            color = TextSecondary,
+            modifier = Modifier.padding(bottom = 6.dp)
+        )
+        LazyRow(
+            horizontalArrangement = Arrangement.spacedBy(6.dp)
+        ) {
+            items(languages) { (code, label) ->
+                val isSelected = selected == code
+                Box(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(20.dp))
+                        .background(
+                            if (isSelected) PurplePrimary
+                            else NavyElevated.copy(alpha = 0.7f)
+                        )
+                        .clickable { onSelect(code) }
+                        .padding(horizontal = 12.dp, vertical = 6.dp)
+                ) {
+                    Text(
+                        label,
+                        style = MaterialTheme.typography.labelSmall,
+                        color = if (isSelected) Color.White else TextSecondary,
+                        fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
+                    )
+                }
+            }
+        }
     }
 }
